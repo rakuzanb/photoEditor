@@ -1,10 +1,25 @@
+#Rakuzanb
+#PhotoEditor
 
 from glob import glob
+from tkinter import filedialog
+import cv2
+import numpy as n
 import tkinter as tk
 from tkinter.constants import ANCHOR
+from PIL import Image
+from PIL import ImageTk
+from PIL import ImageEnhance
 
 
-
+def contrast_callback(contrast_pos):
+    contrast_pos = float(contrast_pos)
+    print(contrast_pos)
+    global outputImage
+    enhancer = ImageEnhance.Brightness(originalImage)
+    outputImage = enhancer.enhance(contrast_pos)
+    dispayImage(outputImage)
+    
 def blue_callback():
     opencvImage = cv2.cvtColor(np.array(originalImage), cv2.COLOR_RGB2BGR)
     opencvImage[:, :, 2] - 100
@@ -43,6 +58,16 @@ def dispayImage(displayImage):
     showWindow.photo_ref = ImagetoDisplay
     showWindow.pack()
     
+    
+    
+def color_callback(color_pos):
+    color_pos = float(color_pos)
+    print(color_pos)
+    global outputImage
+    enhancer = ImageEnhance.Brightness(originalImage)
+    outputImage = enhancer.enhance(color_pos)
+    dispayImage(outputImage)
+    
 def import_callback():
     global originalImage
     filename = filedialog.askopenfilename()
@@ -64,21 +89,9 @@ def brightness_callback(brightness_pos):
     outputImage = enhancer.enhance(brightness_pos)
     dispayImage(outputImage)
     
-def contrast_callback(contrast_pos):
-    contrast_pos = float(contrast_pos)
-    print(contrast_pos)
-    global outputImage
-    enhancer = ImageEnhance.Brightness(originalImage)
-    outputImage = enhancer.enhance(contrast_pos)
-    dispayImage(outputImage)
 
-def color_callback(color_pos):
-    color_pos = float(color_pos)
-    print(color_pos)
-    global outputImage
-    enhancer = ImageEnhance.Brightness(originalImage)
-    outputImage = enhancer.enhance(color_pos)
-    dispayImage(outputImage)
+
+
     
 window = tk.Tk()
 screen_width = window.winfo_screenwidth()
